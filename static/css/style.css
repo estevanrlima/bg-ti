@@ -84,3 +84,11 @@ input[type=checkbox] {
    }
 
   input[type="checkbox"]:checked + .check { opacity: 1; }
+
+  .highlight {
+     background-color: #157D89;
+     color: #EAEAEA;
+     padding: 10px;
+     border-radius: 5px;
+     text-transform: uppercase;
+   }

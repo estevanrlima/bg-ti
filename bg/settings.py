@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'had',
     'home',
     'tests',
-    'resiliteste'
+    'resiliteste',
+    'burnout'
 ]
 
 MIDDLEWARE = [
