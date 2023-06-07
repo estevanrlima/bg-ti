@@ -8,10 +8,17 @@ def connect_db():
         password="Bgdata.2022",
         database="bgtreinamentos$bgrecords"
     )
-    return my_db
+
+    cursor = my_db.cursor()
+    cursor.execute("SELECT UserEmail FROM HadRecords")
+    email = cursor.fetchone()  # Fetch the first row
+    cursor.close()
+    my_db.close()
+
+    return email[0] if email else None
 
 def index(request):
 
-    db = connect_db()
+    email = connect_db()
 
-    return render(request, 'tests/index.html', {db: db})
+    return render(request, 'tests/index.html', {'db': email})

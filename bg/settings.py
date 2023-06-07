@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'had',
     'home',
-    'tests'
+    'tests',
+    'resiliteste'
 ]
 
 MIDDLEWARE = [
