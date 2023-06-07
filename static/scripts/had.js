@@ -1,16 +1,22 @@
 function validateForm() {
     var form = document.getElementById("hadForm");
-    var inputs = form.getElementsByTagName("input");
-
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].type === "radio" && !inputs[i].checked) {
-            alert("Por favor responda todas as perguntas");
-            return false;
-        } else if (inputs[i].value === "") {
-            alert("Por favor responda todas as perguntas");
-            return false;
+    var questionGroups = form.getElementsByClassName("question-group");
+  
+    for (var i = 0; i < questionGroups.length; i++) {
+      var radios = questionGroups[i].getElementsByTagName("input");
+      var checkedCount = 0;
+  
+      for (var j = 0; j < radios.length; j++) {
+        if (radios[j].type === "radio" && radios[j].checked) {
+          checkedCount++;
         }
+      }
+  
+      if (checkedCount === 0) {
+        alert("Por favor, responda todas as perguntas");
+        return false;
+      }
     }
-
+  
     return true;
-}
+  }
