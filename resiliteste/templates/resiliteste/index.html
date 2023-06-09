@@ -1,910 +1,1076 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-    {% load static %}
-    <link rel="stylesheet" href='{% static "css/style.css" %}?version=4'>
-    <script src="{% static 'scripts/resili.js' %}"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Resiliteste</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% load static %}
+  <link rel="stylesheet" href='{% static "css/style.css" %}?version=1'>
+  <script src="{% static 'scripts/resili.js' %}?version=2"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Resiliteste</title>
 </head>
 
 <body>
-    <div class="mx-0 mx-sm-auto">
-      <div class="card">
-        <div class="card-body">
-          <div class="text-center ">
-            <i class="far fa-file-alt fa-4x mb-3 text-primary"></i>
-            <p class="pTitle">
-              <strong>RESILITESTE</strong>
-            </p>
-            <p>
-              Responda a alternativa que está mais coerente com seu estado emocional, nas últimas semanas:
-            </p>
+  <div class="mx-0 mx-sm-auto">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center ">
+          <i class="far fa-file-alt fa-4x mb-3 text-primary"></i>
+          <p class="pTitle">
+            <strong>RESILITESTE</strong>
+          </p>
+          <p>
+            Responda a alternativa que está mais coerente com seu estado emocional, nas últimas semanas:
+          </p>
+        </div>
+
+        <form class="px-4" id="resiliForm" action="/" method="post" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <input type="hidden" name="formName" value="resiliForm">
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Endereço de email</label>
+            <input type="email" class="form-control" name="userEmail" id="exampleInputEmail1"
+              aria-describedby="emailHelp" placeholder="Digite o seu email">
+            <small id="emailHelp" class="form-text text-muted">Nós não iremos compartilhar o seu email.</small>
           </div>
-  
-          <form class="px-4" id="resiliForm" action="/" method="post" onsubmit="return validateForm()">
-            {% csrf_token %}
-            <input type="hidden" name="formName" value="resiliForm">
 
-            <div class="form-group">
-              <label for="exampleInputEmail1">Endereço de email</label>
-              <input type="email" class="form-control" name="userEmail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Digite o seu email">
-              <small id="emailHelp" class="form-text text-muted">Nós não iremos compartilhar o seu email.</small>
-            </div>
-  
-            <p class="text-center highlight"><strong>Acorda mais de 2x durante a noite?</strong></p>
-
-              <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x1" value="sim, muito comum"/>
+          <p class="text-center highlight"><strong>Acorda mais de 2x durante a noite?</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x1"
+                value="sim, muito comum" />
               <label class="form-check-label" for="radioAcordaMais2x1">
-                  sim, muito comum
-              </label>
-              </div>
-              <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x2" value="boa parte do tempo"/>
-              <label class="form-check-label" for="radioAcordaMais2x2">
-                  boa parte do tempo
-              </label>
-              </div>
-              <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x3" value="médio, talvez, as vezes"/>
-              <label class="form-check-label" for="radioAcordaMais2x3">
-                  médio, talvez, as vezes
-              </label>
-              </div>
-              <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x4" value="raramente"/>
-              <label class="form-check-label" for="radioAcordaMais2x4">
-                  raramente
-              </label>
-              </div>
-              <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x5" value="não, nada/pouco"/>
-                  <label class="form-check-label" for="radioAcordaMais2x5">
-                      não, nada/pouco
-                  </label>
-              </div>
-
-            <p class="text-center highlight"><strong>Em geral consegue dormir no mínimo 6 horas seguidas?</strong></p>
-
-              <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir1" value="sim, muito comum"/>
-              <label class="form-check-label" for="radioEmGeralConsDormir1">
                 sim, muito comum
               </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x2"
+                value="boa parte do tempo" />
+              <label class="form-check-label" for="radioAcordaMais2x2">
+                boa parte do tempo
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x3"
+                value="médio, talvez, as vezes" />
+              <label class="form-check-label" for="radioAcordaMais2x3">
+                médio, talvez, as vezes
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x4"
+                value="raramente" />
+              <label class="form-check-label" for="radioAcordaMais2x4">
+                raramente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioAcordaMais2x" id="radioAcordaMais2x5"
+                value="não, nada/pouco" />
+              <label class="form-check-label" for="radioAcordaMais2x5">
+                não, nada/pouco
+              </label>
+            </div>
+
+            <p class="text-center highlight"><strong>Em geral consegue dormir no mínimo 6 horas seguidas?</strong></p>
+            <div class="radioContainer">
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir1"
+                  value="sim, muito comum" />
+                <label class="form-check-label" for="radioEmGeralConsDormir1">
+                  sim, muito comum
+                </label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir2" value="nem sempre, às vezes"/>
+                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir2"
+                  value="nem sempre, às vezes" />
                 <label class="form-check-label" for="radioEmGeralConsDormir2">
                   nem sempre, às vezes
                 </label>
-                </div>
+              </div>
               <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir3" value="raramente"/>
+                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir3"
+                  value="raramente" />
                 <label class="form-check-label" for="radioEmGeralConsDormir3">
                   raramente
                 </label>
               </div>
 
               <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir4" value="raramente"/>
+                <input class="form-check-input" type="radio" name="radioEmGeralConsDormir" id="radioEmGeralConsDormir4"
+                  value="raramente" />
                 <label class="form-check-label" for="radioEmGeralConsDormir4">
                   não, nada/pouco
                 </label>
               </div>
-            
-            <p class="text-center highlight"><strong>Peso está adequado a Idade? Obs...Sim para IMC < 29</strong></p>
 
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq1" value="sim, me sinto com peso adequado"/>
-                <label class="form-check-label" for="radioPesoAdeq1">
-                  sim, me sinto com peso adequado
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq2" value="médio, talvez um pouco acima do peso (até 6 kg do ideal)"/>
-                <label class="form-check-label" for="radioPesoAdeq2">
-                  médio, talvez um pouco acima do peso (até 6 kg do ideal)
-                </label>
+              <p class="text-center highlight"><strong>Peso está adequado a Idade? Obs...Sim para IMC < 29</strong>
+              </p>
+              <div class="radioContainer">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq1"
+                    value="sim, me sinto com peso adequado" />
+                  <label class="form-check-label" for="radioPesoAdeq1">
+                    sim, me sinto com peso adequado
+                  </label>
                 </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq3" value="Não estou com peso ideal, estou muito acima (ou abaixo) do peso"/>
-                <label class="form-check-label" for="radioPesoAdeq3">
-                  Não estou com peso ideal, estou muito acima (ou abaixo) do peso
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq4" value="Estou totalmente fora do padrão saudável de peso (obesidade ou anorexia) e com problemas sérios de saúde"/>
-                <label class="form-check-label" for="radioPesoAdeq4">
-                  Estou totalmente fora do padrão saudável de peso (obesidade ou anorexia) e com problemas sérios de saúde
-                </label>
-              </div>
-
-            <p class="text-center highlight"><strong>Possui rotina de atividade física: Mínimo 3x semana por 30 min ( ou no min 2x por semana em atividade de aprox 60 min)</strong></p>
-
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina1" value="sim, tenho rotina frequente"/>
-                <label class="form-check-label" for="radioPossuiRotina1">
-                  sim, tenho rotina frequente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina2" value="médio, às vezes falho ou não me dedico firme"/>
-                <label class="form-check-label" for="radioPossuiRotina2">
-                  médio, às vezes falho ou não me dedico firme
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina3" value="eventualmente faço alguma atividade, sem rotina"/>
-                <label class="form-check-label" for="radioPossuiRotina3">
-                  eventualmente faço alguma atividade, sem rotina
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina3" value="não pratico atividade física"/>
-                <label class="form-check-label" for="radioPossuiRotina3">
-                  não pratico atividade física
-                </label>
-              </div>
-
-            <p class="text-center highlight"><strong>Sente sobrecarga e cansaço constante?</strong></p>
-
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioSenteSobrec1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec2" value="médio, talvez, as vezes"/>
-                <label class="form-check-label" for="radioSenteSobrec2">
-                  médio, talvez, as vezes
-                </label>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq2"
+                    value="médio, talvez um pouco acima do peso (até 6 kg do ideal)" />
+                  <label class="form-check-label" for="radioPesoAdeq2">
+                    médio, talvez um pouco acima do peso (até 6 kg do ideal)
+                  </label>
                 </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec3" value="não é comum, raramente"/>
-                <label class="form-check-label" for="radioSenteSobrec3">
-                  não é comum, raramente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioSenteSobrec4">
-                  não, nada/pouco
-                </label>
-              </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq3"
+                    value="Não estou com peso ideal, estou muito acima (ou abaixo) do peso" />
+                  <label class="form-check-label" for="radioPesoAdeq3">
+                    Não estou com peso ideal, estou muito acima (ou abaixo) do peso
+                  </label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="radioPesoAdeq" id="radioPesoAdeq4"
+                    value="Estou totalmente fora do padrão saudável de peso (obesidade ou anorexia) e com problemas sérios de saúde" />
+                  <label class="form-check-label" for="radioPesoAdeq4">
+                    Estou totalmente fora do padrão saudável de peso (obesidade ou anorexia) e com problemas sérios de
+                    saúde
+                  </label>
+                </div>
 
-            <p class="text-center highlight"><strong>Tem vida social (sair ao menos 1 vez a cada 15 dias)?</strong></p>
-              
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial1" value="sim, muito comum ; tenho vida social"/>
-                <label class="form-check-label" for="radioTemVidaSocial1">
-                  sim, muito comum ; tenho vida social
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial2" value="médio, talvez, as vezes saio com amigos/familiares"/>
-                <label class="form-check-label" for="radioTemVidaSocial2">
-                  médio, talvez, as vezes saio com amigos/familiares
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial3" value="fraca, raramente saio de casa, sou muito caseiro"/>
-                <label class="form-check-label" for="radioTemVidaSocial3">
-                  fraca, raramente saio de casa, sou muito caseiro
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioTemVidaSocial4">
-                  não, nada/pouco
-                </label>
-              </div>
-  
-            <p class="text-center highlight"><strong>Pratica algum tipo de meditação ou exercício de concentração?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioPraticaMed1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed2" value="médio, talvez, as vezes"/>
-                <label class="form-check-label" for="radioPraticaMed2">
-                  médio, talvez, as vezes
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed3" value="fraco, raramente"/>
-                <label class="form-check-label" for="radioPraticaMed3">
-                  fraco, raramente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioPraticaMed4">
-                  não, nada/pouco
-                </label>
-              </div>
-  
-            <p class="text-center highlight"><strong>Vícios: Hábito frequente (diário) de álcool (+ de 2 doses todo dia) , drogas (+ de 3 x por semana) , jogo (apostas, ou videogames por mais de 3/4 horas continuas e diariamente)</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio1" value="qsim, muito comum,praticamente todo dia"/>
-                <label class="form-check-label" for="radioVicio1">
-                  sim, muito comum,praticamente todo dia
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio2" value="médio, talvez, não todo dia mas frequente"/>
-                <label class="form-check-label" for="radioVicio2">
-                  médio, talvez, não todo dia mas frequente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio3" value="fraco, raramente,esporadicamente"/>
-                <label class="form-check-label" for="radioVicio3">
-                  fraco, raramente,esporadicamente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioVicio4">
-                  não, nada/pouco
-                </label>
-              </div>
-  
-            <p class="text-center highlight"><strong>Divide bem tempo de repouso, trabalho e vida social ?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo1" value="sim, separo um tempo para descansar e um tempo para me divertir"/>
-                <label class="form-check-label" for="radioDivideTempo1">
-                  sim, separo um tempo para descansar e um tempo para me divertir
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo2" value="médio, talvez, as vezes esqueço de lazer e descanso"/>
-                <label class="form-check-label" for="radioDivideTempo2">
-                  médio, talvez, as vezes esqueço de lazer e descanso
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo3" value="fraco, raramente tenho vida social ou descanso"/>
-                <label class="form-check-label" for="radioDivideTempo3">
-                  fraco, raramente tenho vida social ou descanso
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo4" value="não, nada/pouco tempo, estou muito sobrecarregada(o)"/>
-                <label class="form-check-label" for="radioDivideTempo4">
-                  não, nada/pouco tempo, estou muito sobrecarregada(o)
-                </label>
-              </div>
-  
-            <p class="text-center highlight"><strong>Tira tempo para si? Lazer pessoal, Hobby?</strong></p>
-  
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo1" value="sim, tenho minhas preferências/hobby"/>
-              <label class="form-check-label" for="radioTiraTempo1">
-                sim, tenho minhas preferências/hobby
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo2" value="eventualmente faço algo só para mim"/>
-              <label class="form-check-label" for="radioTiraTempo2">
-                eventualmente faço algo só para mim
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo3" value="raramente penso só em mim, atividade que eu goste só para mim"/>
-              <label class="form-check-label" for="radioTiraTempo3">
-                raramente penso só em mim, atividade que eu goste só para mim
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo4" value="não, nada/pouco, não faço nada especifico só pra mim"/>
-              <label class="form-check-label" for="radioTiraTempo4">
-                não, nada/pouco, não faço nada especifico só pra mim
-              </label>
-            </div>
-  
-            <p class="text-center highlight"><strong>Otimismo no futuro: acredita em dias melhores?
-            </strong></p>
-  
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo1" value="sim, muito comum pensar que as coisas vão mehorar"/>
-              <label class="form-check-label" for="radioOtimismo1">
-                sim, muito comum pensar que as coisas vão mehorar
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo2" value="médio, talvez, as vezes é dificil ser otimista"/>
-              <label class="form-check-label" for="radioOtimismo2">
-                médio, talvez, as vezes é dificil ser otimista
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo3" value="raramente, está bem dificil pensar que as coisas vão melhorar"/>
-              <label class="form-check-label" for="radioOtimismo3">
-                raramente, está bem dificil pensar que as coisas vão melhorar
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo4" value="não, nada/pouco as coisas estão muito ruins e só tende a piorar"/>
-              <label class="form-check-label" for="radioOtimismo4">
-                não, nada/pouco as coisas estão muito ruins e só tende a piorar
-              </label>
-            </div>
-  
-            <p class="text-center highlight"><strong>Eu me entusiasmo com facilidade, me mantenho motivado</strong></p>
-  
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia1" value="sim, muito comum estar motivado"/>
-              <label class="form-check-label" for="radioEuMeEntusia1">
-                sim, muito comum estar motivado
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia2" value="médio, talvez, nem sempre estou motivado /entusiasmado"/>
-              <label class="form-check-label" for="radioEuMeEntusia2">
-                médio, talvez, nem sempre estou motivado /entusiasmado
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia3" value="fraco, raramente estou entusiasmado"/>
-              <label class="form-check-label" for="radioEuMeEntusia3">
-                fraco, raramente estou entusiasmado
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia4" value="não, nada/pouco"/>
-              <label class="form-check-label" for="radioEuMeEntusia4">
-                não, nada/pouco
-              </label>
-            </div>
-  
-            <p class="text-center highlight"><strong>Sou uma pessoa alegre e divertida, a vida em geral é leve
-            </strong></p>
-  
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre1" value="sim, muito comum"/>
-              <label class="form-check-label" for="radioSouAlegre1">
-                sim, muito comum
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre2" value="médio, talvez, as vezes"/>
-              <label class="form-check-label" for="radioSouAlegre2">
-                médio, talvez, as vezes
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre3" value="fraco, raramente"/>
-              <label class="form-check-label" for="radioSouAlegre3">
-                fraco, raramente
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre4" value="não, nada/pouco"/>
-              <label class="form-check-label" for="radioSouAlegre4">
-                não, nada/pouco
-              </label>
-            </div>
-  
-            <p class="text-center highlight"><strong>Me sinto capaz de realizar tarefas e tenho confiança na entrega</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz1" value="sim, sinto que sou capaz"/>
-                <label class="form-check-label" for="radioMeSintoCapaz1">
-                  sim, sinto que sou capaz
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz2" value="médio, talvez, as vezes fico inseguro da minha capacidade"/>
-                <label class="form-check-label" for="radioMeSintoCapaz2">
-                  médio, talvez, as vezes fico inseguro da minha capacidade
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz3" value="fraco, raramente confio na minha entrega"/>
-                <label class="form-check-label" for="radioMeSintoCapaz3">
-                  fraco, raramente confio na minha entrega
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz4" value="não, nada/pouco ,sou muito inseguro"/>
-                <label class="form-check-label" for="radioMeSintoCapaz4">
-                  não, nada/pouco ,sou muito inseguro
-                </label>
-              </div>
-              
-            <p class="text-center highlight"><strong>Sou Obstinado, Persistente</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioObs" id="radioObs1" value="sim, muito comum eu não desisto"/>
-                <label class="form-check-label" for="radioObs1">
-                  sim, muito comum eu não desisto
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioObs" id="radioObs2" value="médio, talvez, as vezes desanimo"/>
-                <label class="form-check-label" for="radioObs2">
-                  médio, talvez, as vezes desanimo
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioObs" id="radioObs3" value="fraco, muitas vezes não persisto"/>
-                <label class="form-check-label" for="radioObs3">
-                  fraco, muitas vezes não persisto
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioObs" id="radioObs4" value="não, nada/pouco abandono muitos projetos"/>
-                <label class="form-check-label" for="radioObs4">
-                  não, nada/pouco abandono muitos projetos
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Possui rotina de atividade física: Mínimo 3x semana por 30 min
+                    ( ou no min 2x por semana em atividade de aprox 60 min)</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina1"
+                      value="sim, tenho rotina frequente" />
+                    <label class="form-check-label" for="radioPossuiRotina1">
+                      sim, tenho rotina frequente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina2"
+                      value="médio, às vezes falho ou não me dedico firme" />
+                    <label class="form-check-label" for="radioPossuiRotina2">
+                      médio, às vezes falho ou não me dedico firme
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina3"
+                      value="eventualmente faço alguma atividade, sem rotina" />
+                    <label class="form-check-label" for="radioPossuiRotina3">
+                      eventualmente faço alguma atividade, sem rotina
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiRotina" id="radioPossuiRotina3"
+                      value="não pratico atividade física" />
+                    <label class="form-check-label" for="radioPossuiRotina3">
+                      não pratico atividade física
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Organizado, Focado</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado1" value="sim, gosto de tudo em ordem e sou focado"/>
-                <label class="form-check-label" for="radioOrganizado1">
-                  sim, gosto de tudo em ordem e sou focado
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado2" value="médio, talvez, mas me acho na minha bagunça"/>
-                <label class="form-check-label" for="radioOrganizado2">
-                  médio, talvez, mas me acho na minha bagunça
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado3" value="pouco organizado, as vezes perco o foco"/>
-                <label class="form-check-label" for="radioOrganizado3">
-                  pouco organizado, as vezes perco o foco
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado4" value="nada organizado, quase sempre disperso"/>
-                <label class="form-check-label" for="radioOrganizado4">
-                  nada organizado, quase sempre disperso
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Sente sobrecarga e cansaço constante?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioSenteSobrec1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioSenteSobrec2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec3"
+                      value="não é comum, raramente" />
+                    <label class="form-check-label" for="radioSenteSobrec3">
+                      não é comum, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteSobrec" id="radioSenteSobrec4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioSenteSobrec4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            
-            <p class="text-center highlight"><strong>Equilíbrio emocional</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEq" id="radioEq1" value="sim, muito comum me manter equilibrado e sereno"/>
-                <label class="form-check-label" for="radioEq1">
-                  sim, muito comum me manter equilibrado e sereno
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEq" id="radioEq2" value="médio, talvez, as vezes perco o controle ou o equilíbrio"/>
-                <label class="form-check-label" for="radioEq2">
-                  médio, talvez, as vezes perco o controle ou o equilíbrio
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEq" id="radioEq3" value="fraco, frequentemente perco o controle ou me desestabilizo"/>
-                <label class="form-check-label" for="radioEq3">
-                  fraco, frequentemente perco o controle ou me desestabilizo
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEq" id="radioEq4" value="não me sinto com controle emocional nenhum no momento"/>
-                <label class="form-check-label" for="radioEq4">
-                  não me sinto com controle emocional nenhum no momento
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Tem vida social (sair ao menos 1 vez a cada 15 dias)?</strong>
+                </p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial1"
+                      value="sim, muito comum ; tenho vida social" />
+                    <label class="form-check-label" for="radioTemVidaSocial1">
+                      sim, muito comum ; tenho vida social
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial2"
+                      value="médio, talvez, as vezes saio com amigos/familiares" />
+                    <label class="form-check-label" for="radioTemVidaSocial2">
+                      médio, talvez, as vezes saio com amigos/familiares
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial3"
+                      value="fraca, raramente saio de casa, sou muito caseiro" />
+                    <label class="form-check-label" for="radioTemVidaSocial3">
+                      fraca, raramente saio de casa, sou muito caseiro
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioTemVidaSocial4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioTemVidaSocial4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Em geral reage com explosões e arrependimento</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioEmGeralReage1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage2" value="médio, talvez, as vezes"/>
-                <label class="form-check-label" for="radioEmGeralReage2">
-                  médio, talvez, as vezes
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage3" value="fraco, raramente"/>
-                <label class="form-check-label" for="radioEmGeralReage3">
-                  fraco, raramente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioEmGeralReage4">
-                  não, nada/pouco
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Pratica algum tipo de meditação ou exercício de
+                    concentração?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioPraticaMed1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioPraticaMed2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed3"
+                      value="fraco, raramente" />
+                    <label class="form-check-label" for="radioPraticaMed3">
+                      fraco, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPraticaMed" id="radioPraticaMed4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioPraticaMed4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Desiste, dispersa com frequência das tarefas</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste1" value="sim, muito comum eu desanimar de algum projeto"/>
-                <label class="form-check-label" for="radioDesiste1">
-                  sim, muito comum eu desanimar de algum projeto
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste2" value="médio, talvez, as vezes eu desanimo e acho que é melhor desisitir"/>
-                <label class="form-check-label" for="radioDesiste2">
-                  médio, talvez, as vezes eu desanimo e acho que é melhor desisitir
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste3" value="raramente eu desisto ou dou o braço a torcer, eu persisto"/>
-                <label class="form-check-label" for="radioDesiste3">
-                  raramente eu desisto ou dou o braço a torcer, eu persisto
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste4" value="não, nada me tira do meu objetivo"/>
-                <label class="form-check-label" for="radioDesiste4">
-                  não, nada me tira do meu objetivo
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Vícios: Hábito frequente (diário) de álcool (+ de 2 doses todo
+                    dia) , drogas (+ de 3 x por semana) , jogo (apostas, ou videogames por mais de 3/4 horas continuas e
+                    diariamente)</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio1"
+                      value="qsim, muito comum,praticamente todo dia" />
+                    <label class="form-check-label" for="radioVicio1">
+                      sim, muito comum,praticamente todo dia
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio2"
+                      value="médio, talvez, não todo dia mas frequente" />
+                    <label class="form-check-label" for="radioVicio2">
+                      médio, talvez, não todo dia mas frequente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio3"
+                      value="fraco, raramente,esporadicamente" />
+                    <label class="form-check-label" for="radioVicio3">
+                      fraco, raramente,esporadicamente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioVicio" id="radioVicio4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioVicio4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Consegue ver o contexto com clareza</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer1" value="sim, tenho visão clara da situação,sou pragmatico"/>
-                <label class="form-check-label" for="radioConsegueVer1">
-                  sim, tenho visão clara da situação,sou pragmatico
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer2" value="médio, talvez, as vezes demoro a entender a situação"/>
-                <label class="form-check-label" for="radioConsegueVer2">
-                  médio, talvez, as vezes demoro a entender a situação
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer3" value="fraco, é comum sob pressão eu ter dificuldade de entender a situação e sair dela"/>
-                <label class="form-check-label" for="radioConsegueVer3">
-                  fraco, é comum sob pressão eu ter dificuldade de entender a situação e sair dela
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer4" value="quando estou muito nervoso me perco no problema e fico patinando"/>
-                <label class="form-check-label" for="radioConsegueVer4">
-                  quando estou muito nervoso me perco no problema e fico patinando
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Divide bem tempo de repouso, trabalho e vida social ?</strong>
+                </p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo1"
+                      value="sim, separo um tempo para descansar e um tempo para me divertir" />
+                    <label class="form-check-label" for="radioDivideTempo1">
+                      sim, separo um tempo para descansar e um tempo para me divertir
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo2"
+                      value="médio, talvez, as vezes esqueço de lazer e descanso" />
+                    <label class="form-check-label" for="radioDivideTempo2">
+                      médio, talvez, as vezes esqueço de lazer e descanso
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo3"
+                      value="fraco, raramente tenho vida social ou descanso" />
+                    <label class="form-check-label" for="radioDivideTempo3">
+                      fraco, raramente tenho vida social ou descanso
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDivideTempo" id="radioDivideTempo4"
+                      value="não, nada/pouco tempo, estou muito sobrecarregada(o)" />
+                    <label class="form-check-label" for="radioDivideTempo4">
+                      não, nada/pouco tempo, estou muito sobrecarregada(o)
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Consegue ceder e ter flexibilidade?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder1" value="sim, sou uma pessoa bastante flexivel e adaptavel"/>
-                <label class="form-check-label" for="radioConsCeder1">
-                  sim, sou uma pessoa bastante flexivel e adaptavel
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder2" value="médio, talvez, as vezes cedo e sou flexível mas nem sempre"/>
-                <label class="form-check-label" for="radioConsCeder2">
-                  médio, talvez, as vezes cedo e sou flexível mas nem sempre
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder3" value="sou mais resistente a mudanças, em geral resisto"/>
-                <label class="form-check-label" for="radioConsCeder3">
-                  sou mais resistente a mudanças, em geral resisto
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder4" value="não, nada/pouco , sou bem teimoso e resistente a mudanças"/>
-                <label class="form-check-label" for="radioConsCeder4">
-                  não, nada/pouco , sou bem teimoso e resistente a mudanças
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Tira tempo para si? Lazer pessoal, Hobby?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo1"
+                      value="sim, tenho minhas preferências/hobby" />
+                    <label class="form-check-label" for="radioTiraTempo1">
+                      sim, tenho minhas preferências/hobby
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo2"
+                      value="eventualmente faço algo só para mim" />
+                    <label class="form-check-label" for="radioTiraTempo2">
+                      eventualmente faço algo só para mim
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo3"
+                      value="raramente penso só em mim, atividade que eu goste só para mim" />
+                    <label class="form-check-label" for="radioTiraTempo3">
+                      raramente penso só em mim, atividade que eu goste só para mim
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioTiraTempo" id="radioTiraTempo4"
+                      value="não, nada/pouco, não faço nada especifico só pra mim" />
+                    <label class="form-check-label" for="radioTiraTempo4">
+                      não, nada/pouco, não faço nada especifico só pra mim
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Pensa muito nos outros? se sente altruísta?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito1" value="sim, muito comum pensar mais nos outros que em mim"/>
-                <label class="form-check-label" for="radioPensaMuito1">
-                  sim, muito comum pensar mais nos outros que em mim
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito2" value="médio, talvez, as vezes penso demais nos outros"/>
-                <label class="form-check-label" for="radioPensaMuito2">
-                  médio, talvez, as vezes penso demais nos outros
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito3" value="raramente, em geral penso em mim e na familia primeiro e depois ajudo quando posso"/>
-                <label class="form-check-label" for="radioPensaMuito3">
-                  raramente, em geral penso em mim e na familia primeiro e depois ajudo quando posso
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito4" value="não, nada/pouco,primeiro eu cuido de mim e depois de quem eu gosto"/>
-                <label class="form-check-label" for="radioPensaMuito4">
-                  não, nada/pouco,primeiro eu cuido de mim e depois de quem eu gosto
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Otimismo no futuro: acredita em dias melhores?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo1"
+                      value="sim, muito comum pensar que as coisas vão mehorar" />
+                    <label class="form-check-label" for="radioOtimismo1">
+                      sim, muito comum pensar que as coisas vão mehorar
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo2"
+                      value="médio, talvez, as vezes é dificil ser otimista" />
+                    <label class="form-check-label" for="radioOtimismo2">
+                      médio, talvez, as vezes é dificil ser otimista
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo3"
+                      value="raramente, está bem dificil pensar que as coisas vão melhorar" />
+                    <label class="form-check-label" for="radioOtimismo3">
+                      raramente, está bem dificil pensar que as coisas vão melhorar
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOtimismo" id="radioOtimismo4"
+                      value="não, nada/pouco as coisas estão muito ruins e só tende a piorar" />
+                    <label class="form-check-label" for="radioOtimismo4">
+                      não, nada/pouco as coisas estão muito ruins e só tende a piorar
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Reconhece coisas boas no momento de vida atual?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioReconhece1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece2" value="médio, talvez, as vezes"/>
-                <label class="form-check-label" for="radioReconhece2">
-                  médio, talvez, as vezes
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece3" value="fraco, raramente"/>
-                <label class="form-check-label" for="radioReconhece3">
-                  fraco, raramente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioReconhece4">
-                  não, nada/pouco
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Eu me entusiasmo com facilidade, me mantenho motivado</strong>
+                </p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia1"
+                      value="sim, muito comum estar motivado" />
+                    <label class="form-check-label" for="radioEuMeEntusia1">
+                      sim, muito comum estar motivado
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia2"
+                      value="médio, talvez, nem sempre estou motivado /entusiasmado" />
+                    <label class="form-check-label" for="radioEuMeEntusia2">
+                      médio, talvez, nem sempre estou motivado /entusiasmado
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia3"
+                      value="fraco, raramente estou entusiasmado" />
+                    <label class="form-check-label" for="radioEuMeEntusia3">
+                      fraco, raramente estou entusiasmado
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEuMeEntusia" id="radioEuMeEntusia4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioEuMeEntusia4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Diante de crise, reage buscando soluções? </strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise1" value="sim, muito comum procurar alternativas"/>
-                <label class="form-check-label" for="radioDianteCrise1">
-                  sim, muito comum procurar alternativas
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise2" value="médio, talvez, as vezes tento buscar ajuda e soluções"/>
-                <label class="form-check-label" for="radioDianteCrise2">
-                  médio, talvez, as vezes tento buscar ajuda e soluções
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise3" value="fraco, raramente eu tomo a frente para soluções,sou mais de apoiar"/>
-                <label class="form-check-label" for="radioDianteCrise3">
-                  fraco, raramente eu tomo a frente para soluções,sou mais de apoiar
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise4" value="não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda ."/>
-                <label class="form-check-label" for="radioDianteCrise4">
-                  não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda .
-                </label>
-              </div>
-            
-            <p class="text-center highlight"><strong>Sente força de combate? acredita ser forte?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca1" value="sim, muito comum me chamarem de guerreiro(a)"/>
-                <label class="form-check-label" for="radioSenteForca1">
-                  sim, muito comum me chamarem de guerreiro(a)
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca2" value="médio, talvez, as vezes surpreendo e me mostro forte"/>
-                <label class="form-check-label" for="radioSenteForca2">
-                  médio, talvez, as vezes surpreendo e me mostro forte
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca3" value="fraco, raramente sou de lutar e brigar pelas coisas"/>
-                <label class="form-check-label" for="radioSenteForca3">
-                  fraco, raramente sou de lutar e brigar pelas coisas
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca4" value="não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda ."/>
-                <label class="form-check-label" for="radioSenteForca4">
-                  não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda .
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Sou uma pessoa alegre e divertida, a vida em geral é
+                    leve</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioSouAlegre1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioSouAlegre2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre3"
+                      value="fraco, raramente" />
+                    <label class="form-check-label" for="radioSouAlegre3">
+                      fraco, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSouAlegre" id="radioSouAlegre4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioSouAlegre4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Sou capaz de perdoar facilmente quando me magoam</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioCapazPerdoar1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar2" value="médio, talvez, as vezes é dificil"/>
-                <label class="form-check-label" for="radioCapazPerdoar2">
-                  médio, talvez, as vezes é dificil
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar3" value="fraco, raramente eu perdoo,sou um pouco rancoroso (a)"/>
-                <label class="form-check-label" for="radioCapazPerdoar3">
-                  fraco, raramente eu perdoo,sou um pouco rancoroso (a)
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar4" value="não, nada/pouco, sou muito rancoroso (a)"/>
-                <label class="form-check-label" for="radioCapazPerdoar4">
-                  não, nada/pouco, sou muito rancoroso (a)
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Me sinto capaz de realizar tarefas e tenho confiança na
+                    entrega</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz1"
+                      value="sim, sinto que sou capaz" />
+                    <label class="form-check-label" for="radioMeSintoCapaz1">
+                      sim, sinto que sou capaz
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz2"
+                      value="médio, talvez, as vezes fico inseguro da minha capacidade" />
+                    <label class="form-check-label" for="radioMeSintoCapaz2">
+                      médio, talvez, as vezes fico inseguro da minha capacidade
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz3"
+                      value="fraco, raramente confio na minha entrega" />
+                    <label class="form-check-label" for="radioMeSintoCapaz3">
+                      fraco, raramente confio na minha entrega
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioMeSintoCapaz" id="radioMeSintoCapaz4"
+                      value="não, nada/pouco ,sou muito inseguro" />
+                    <label class="form-check-label" for="radioMeSintoCapaz4">
+                      não, nada/pouco ,sou muito inseguro
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Possui força espiritual ou segue alguma crença religiosa?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp1" value="sim, tenho uma crença/ vivencia espiritual frequente"/>
-                <label class="form-check-label" for="radioPossuiForcaEsp1">
-                  sim, tenho uma crença/ vivencia espiritual frequente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp2" value="eventualmente tenho vivência na religião/atividade espiritualista"/>
-                <label class="form-check-label" for="radioPossuiForcaEsp2">
-                  eventualmente tenho vivência na religião/atividade espiritualista
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp3" value="raramente tenho vivencia espiritual ou frequento alguma religião"/>
-                <label class="form-check-label" for="radioPossuiForcaEsp3">
-                  raramente tenho vivencia espiritual ou frequento alguma religião
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp4" value="não, nada/pouco (somente através de companheiros/parentes)"/>
-                <label class="form-check-label" for="radioPossuiForcaEsp4">
-                  não, nada/pouco (somente através de companheiros/parentes)
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp5" value="não acredito em nada, sou muito pragmático/ateu"/>
-                  <label class="form-check-label" for="radioPossuiForcaEsp5">
+                <p class="text-center highlight"><strong>Sou Obstinado, Persistente</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioObs" id="radioObs1"
+                      value="sim, muito comum eu não desisto" />
+                    <label class="form-check-label" for="radioObs1">
+                      sim, muito comum eu não desisto
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioObs" id="radioObs2"
+                      value="médio, talvez, as vezes desanimo" />
+                    <label class="form-check-label" for="radioObs2">
+                      médio, talvez, as vezes desanimo
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioObs" id="radioObs3"
+                      value="fraco, muitas vezes não persisto" />
+                    <label class="form-check-label" for="radioObs3">
+                      fraco, muitas vezes não persisto
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioObs" id="radioObs4"
+                      value="não, nada/pouco abandono muitos projetos" />
+                    <label class="form-check-label" for="radioObs4">
+                      não, nada/pouco abandono muitos projetos
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Organizado, Focado</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado1"
+                      value="sim, gosto de tudo em ordem e sou focado" />
+                    <label class="form-check-label" for="radioOrganizado1">
+                      sim, gosto de tudo em ordem e sou focado
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado2"
+                      value="médio, talvez, mas me acho na minha bagunça" />
+                    <label class="form-check-label" for="radioOrganizado2">
+                      médio, talvez, mas me acho na minha bagunça
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado3"
+                      value="pouco organizado, as vezes perco o foco" />
+                    <label class="form-check-label" for="radioOrganizado3">
+                      pouco organizado, as vezes perco o foco
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioOrganizado" id="radioOrganizado4"
+                      value="nada organizado, quase sempre disperso" />
+                    <label class="form-check-label" for="radioOrganizado4">
+                      nada organizado, quase sempre disperso
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Equilíbrio emocional</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEq" id="radioEq1"
+                      value="sim, muito comum me manter equilibrado e sereno" />
+                    <label class="form-check-label" for="radioEq1">
+                      sim, muito comum me manter equilibrado e sereno
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEq" id="radioEq2"
+                      value="médio, talvez, as vezes perco o controle ou o equilíbrio" />
+                    <label class="form-check-label" for="radioEq2">
+                      médio, talvez, as vezes perco o controle ou o equilíbrio
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEq" id="radioEq3"
+                      value="fraco, frequentemente perco o controle ou me desestabilizo" />
+                    <label class="form-check-label" for="radioEq3">
+                      fraco, frequentemente perco o controle ou me desestabilizo
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEq" id="radioEq4"
+                      value="não me sinto com controle emocional nenhum no momento" />
+                    <label class="form-check-label" for="radioEq4">
+                      não me sinto com controle emocional nenhum no momento
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Em geral reage com explosões e arrependimento</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioEmGeralReage1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioEmGeralReage2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage3"
+                      value="fraco, raramente" />
+                    <label class="form-check-label" for="radioEmGeralReage3">
+                      fraco, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioEmGeralReage" id="radioEmGeralReage4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioEmGeralReage4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Desiste, dispersa com frequência das tarefas</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste1"
+                      value="sim, muito comum eu desanimar de algum projeto" />
+                    <label class="form-check-label" for="radioDesiste1">
+                      sim, muito comum eu desanimar de algum projeto
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste2"
+                      value="médio, talvez, as vezes eu desanimo e acho que é melhor desisitir" />
+                    <label class="form-check-label" for="radioDesiste2">
+                      médio, talvez, as vezes eu desanimo e acho que é melhor desisitir
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste3"
+                      value="raramente eu desisto ou dou o braço a torcer, eu persisto" />
+                    <label class="form-check-label" for="radioDesiste3">
+                      raramente eu desisto ou dou o braço a torcer, eu persisto
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDesiste" id="radioDesiste4"
+                      value="não, nada me tira do meu objetivo" />
+                    <label class="form-check-label" for="radioDesiste4">
+                      não, nada me tira do meu objetivo
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Consegue ver o contexto com clareza</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer1"
+                      value="sim, tenho visão clara da situação,sou pragmatico" />
+                    <label class="form-check-label" for="radioConsegueVer1">
+                      sim, tenho visão clara da situação,sou pragmatico
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer2"
+                      value="médio, talvez, as vezes demoro a entender a situação" />
+                    <label class="form-check-label" for="radioConsegueVer2">
+                      médio, talvez, as vezes demoro a entender a situação
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer3"
+                      value="fraco, é comum sob pressão eu ter dificuldade de entender a situação e sair dela" />
+                    <label class="form-check-label" for="radioConsegueVer3">
+                      fraco, é comum sob pressão eu ter dificuldade de entender a situação e sair dela
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsegueVer" id="radioConsegueVer4"
+                      value="quando estou muito nervoso me perco no problema e fico patinando" />
+                    <label class="form-check-label" for="radioConsegueVer4">
+                      quando estou muito nervoso me perco no problema e fico patinando
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Consegue ceder e ter flexibilidade?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder1"
+                      value="sim, sou uma pessoa bastante flexivel e adaptavel" />
+                    <label class="form-check-label" for="radioConsCeder1">
+                      sim, sou uma pessoa bastante flexivel e adaptavel
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder2"
+                      value="médio, talvez, as vezes cedo e sou flexível mas nem sempre" />
+                    <label class="form-check-label" for="radioConsCeder2">
+                      médio, talvez, as vezes cedo e sou flexível mas nem sempre
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder3"
+                      value="sou mais resistente a mudanças, em geral resisto" />
+                    <label class="form-check-label" for="radioConsCeder3">
+                      sou mais resistente a mudanças, em geral resisto
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioConsCeder" id="radioConsCeder4"
+                      value="não, nada/pouco , sou bem teimoso e resistente a mudanças" />
+                    <label class="form-check-label" for="radioConsCeder4">
+                      não, nada/pouco , sou bem teimoso e resistente a mudanças
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Pensa muito nos outros? se sente altruísta?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito1"
+                      value="sim, muito comum pensar mais nos outros que em mim" />
+                    <label class="form-check-label" for="radioPensaMuito1">
+                      sim, muito comum pensar mais nos outros que em mim
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito2"
+                      value="médio, talvez, as vezes penso demais nos outros" />
+                    <label class="form-check-label" for="radioPensaMuito2">
+                      médio, talvez, as vezes penso demais nos outros
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito3"
+                      value="raramente, em geral penso em mim e na familia primeiro e depois ajudo quando posso" />
+                    <label class="form-check-label" for="radioPensaMuito3">
+                      raramente, em geral penso em mim e na familia primeiro e depois ajudo quando posso
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPensaMuito" id="radioPensaMuito4"
+                      value="não, nada/pouco,primeiro eu cuido de mim e depois de quem eu gosto" />
+                    <label class="form-check-label" for="radioPensaMuito4">
+                      não, nada/pouco,primeiro eu cuido de mim e depois de quem eu gosto
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Reconhece coisas boas no momento de vida atual?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioReconhece1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioReconhece2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece3"
+                      value="fraco, raramente" />
+                    <label class="form-check-label" for="radioReconhece3">
+                      fraco, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioReconhece" id="radioReconhece4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioReconhece4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Diante de crise, reage buscando soluções? </strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise1"
+                      value="sim, muito comum procurar alternativas" />
+                    <label class="form-check-label" for="radioDianteCrise1">
+                      sim, muito comum procurar alternativas
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise2"
+                      value="médio, talvez, as vezes tento buscar ajuda e soluções" />
+                    <label class="form-check-label" for="radioDianteCrise2">
+                      médio, talvez, as vezes tento buscar ajuda e soluções
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise3"
+                      value="fraco, raramente eu tomo a frente para soluções,sou mais de apoiar" />
+                    <label class="form-check-label" for="radioDianteCrise3">
+                      fraco, raramente eu tomo a frente para soluções,sou mais de apoiar
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioDianteCrise" id="radioDianteCrise4"
+                      value="não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda ." />
+                    <label class="form-check-label" for="radioDianteCrise4">
+                      não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda .
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Sente força de combate? acredita ser forte?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca1"
+                      value="sim, muito comum me chamarem de guerreiro(a)" />
+                    <label class="form-check-label" for="radioSenteForca1">
+                      sim, muito comum me chamarem de guerreiro(a)
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca2"
+                      value="médio, talvez, as vezes surpreendo e me mostro forte" />
+                    <label class="form-check-label" for="radioSenteForca2">
+                      médio, talvez, as vezes surpreendo e me mostro forte
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca3"
+                      value="fraco, raramente sou de lutar e brigar pelas coisas" />
+                    <label class="form-check-label" for="radioSenteForca3">
+                      fraco, raramente sou de lutar e brigar pelas coisas
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteForca" id="radioSenteForca4"
+                      value="não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda ." />
+                    <label class="form-check-label" for="radioSenteForca4">
+                      não, nada/pouco quase nunca tomo a frente, fico mais na retaguarda .
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Sou capaz de perdoar facilmente quando me magoam</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioCapazPerdoar1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar2"
+                      value="médio, talvez, as vezes é dificil" />
+                    <label class="form-check-label" for="radioCapazPerdoar2">
+                      médio, talvez, as vezes é dificil
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar3"
+                      value="fraco, raramente eu perdoo,sou um pouco rancoroso (a)" />
+                    <label class="form-check-label" for="radioCapazPerdoar3">
+                      fraco, raramente eu perdoo,sou um pouco rancoroso (a)
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioCapazPerdoar" id="radioCapazPerdoar4"
+                      value="não, nada/pouco, sou muito rancoroso (a)" />
+                    <label class="form-check-label" for="radioCapazPerdoar4">
+                      não, nada/pouco, sou muito rancoroso (a)
+                    </label>
+                  </div>
+                </div>
+
+                <p class="text-center highlight"><strong>Possui força espiritual ou segue alguma crença
+                    religiosa?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp1"
+                      value="sim, tenho uma crença/ vivencia espiritual frequente" />
+                    <label class="form-check-label" for="radioPossuiForcaEsp1">
+                      sim, tenho uma crença/ vivencia espiritual frequente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp2"
+                      value="eventualmente tenho vivência na religião/atividade espiritualista" />
+                    <label class="form-check-label" for="radioPossuiForcaEsp2">
+                      eventualmente tenho vivência na religião/atividade espiritualista
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp3"
+                      value="raramente tenho vivencia espiritual ou frequento alguma religião" />
+                    <label class="form-check-label" for="radioPossuiForcaEsp3">
+                      raramente tenho vivencia espiritual ou frequento alguma religião
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp4"
+                      value="não, nada/pouco (somente através de companheiros/parentes)" />
+                    <label class="form-check-label" for="radioPossuiForcaEsp4">
+                      não, nada/pouco (somente através de companheiros/parentes)
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioPossuiForcaEsp" id="radioPossuiForcaEsp5"
+                      value="não acredito em nada, sou muito pragmático/ateu" />
+                    <label class="form-check-label" for="radioPossuiForcaEsp5">
                       não acredito em nada, sou muito pragmático/ateu
-                  </label>
-              </div>
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Acredita que tem bons amigos/núcleo pessoal?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita1" value="sim, tenho uma boa rede de amigos/familiares proxima"/>
-                <label class="form-check-label" for="radioAcredita1">
-                  sim, tenho uma boa rede de amigos/familiares proxima
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita2" value="sim, tenho bons amigos/familiares mais nem sempre estou com eles"/>
-                <label class="form-check-label" for="radioAcredita2">
-                  sim, tenho bons amigos/familiares mais nem sempre estou com eles
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita3" value="tenho bons amigos/familiares, mas só conto eventualmente com eles"/>
-                <label class="form-check-label" for="radioAcredita3">
-                  tenho bons amigos/familiares, mas só conto eventualmente com eles
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita4" value="não tenho muitos amigos e quase nunca/nunca conto com eles"/>
-                <label class="form-check-label" for="radioAcredita4">
-                  não tenho muitos amigos e quase nunca/nunca conto com eles
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita5" value="sou sozinho, não tenho com quem contar"/>
-                  <label class="form-check-label" for="radioAcredita5">
-                  sou sozinho, não tenho com quem contar
-                  </label>
-              </div>
+                <p class="text-center highlight"><strong>Acredita que tem bons amigos/núcleo pessoal?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita1"
+                      value="sim, tenho uma boa rede de amigos/familiares proxima" />
+                    <label class="form-check-label" for="radioAcredita1">
+                      sim, tenho uma boa rede de amigos/familiares proxima
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita2"
+                      value="sim, tenho bons amigos/familiares mais nem sempre estou com eles" />
+                    <label class="form-check-label" for="radioAcredita2">
+                      sim, tenho bons amigos/familiares mais nem sempre estou com eles
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita3"
+                      value="tenho bons amigos/familiares, mas só conto eventualmente com eles" />
+                    <label class="form-check-label" for="radioAcredita3">
+                      tenho bons amigos/familiares, mas só conto eventualmente com eles
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita4"
+                      value="não tenho muitos amigos e quase nunca/nunca conto com eles" />
+                    <label class="form-check-label" for="radioAcredita4">
+                      não tenho muitos amigos e quase nunca/nunca conto com eles
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioAcredita" id="radioAcredita5"
+                      value="sou sozinho, não tenho com quem contar" />
+                    <label class="form-check-label" for="radioAcredita5">
+                      sou sozinho, não tenho com quem contar
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Vive bem com a família/companheiro?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem1" value="sim, muito comum"/>
-                <label class="form-check-label" for="radioViveBem1">
-                  sim, muito comum
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem2" value="médio, talvez, as vezes"/>
-                <label class="form-check-label" for="radioViveBem2">
-                  médio, talvez, as vezes
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem3" value="fraco, raramente"/>
-                <label class="form-check-label" for="radioViveBem3">
-                  fraco, raramente
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem4" value="não, nada/pouco"/>
-                <label class="form-check-label" for="radioViveBem4">
-                  não, nada/pouco
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Vive bem com a família/companheiro?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem1"
+                      value="sim, muito comum" />
+                    <label class="form-check-label" for="radioViveBem1">
+                      sim, muito comum
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem2"
+                      value="médio, talvez, as vezes" />
+                    <label class="form-check-label" for="radioViveBem2">
+                      médio, talvez, as vezes
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem3"
+                      value="fraco, raramente" />
+                    <label class="form-check-label" for="radioViveBem3">
+                      fraco, raramente
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioViveBem" id="radioViveBem4"
+                      value="não, nada/pouco" />
+                    <label class="form-check-label" for="radioViveBem4">
+                      não, nada/pouco
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Sente-se realizado com a escolha profissional atual?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza1" value="sim, muito satisfeito"/>
-                <label class="form-check-label" for="radioSenteRealiza1">
-                  sim, muito satisfeito
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza2" value="médio, talvez, as vezes penso que deveria fazer outra coisa"/>
-                <label class="form-check-label" for="radioSenteRealiza2">
-                  médio, talvez, as vezes penso que deveria fazer outra coisa
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza3" value="não, nada/pouco penso muito em fazer outra coisa"/>
-                <label class="form-check-label" for="radioSenteRealiza3">
-                  não, nada/pouco penso muito em fazer outra coisa
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza4" value="estou muito frustrado no momento"/>
-                <label class="form-check-label" for="radioSenteRealiza4">
-                  estou muito frustrado no momento
-                </label>
-              </div>
+                <p class="text-center highlight"><strong>Sente-se realizado com a escolha profissional atual?</strong>
+                </p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza1"
+                      value="sim, muito satisfeito" />
+                    <label class="form-check-label" for="radioSenteRealiza1">
+                      sim, muito satisfeito
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza2"
+                      value="médio, talvez, as vezes penso que deveria fazer outra coisa" />
+                    <label class="form-check-label" for="radioSenteRealiza2">
+                      médio, talvez, as vezes penso que deveria fazer outra coisa
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza3"
+                      value="não, nada/pouco penso muito em fazer outra coisa" />
+                    <label class="form-check-label" for="radioSenteRealiza3">
+                      não, nada/pouco penso muito em fazer outra coisa
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSenteRealiza" id="radioSenteRealiza4"
+                      value="estou muito frustrado no momento" />
+                    <label class="form-check-label" for="radioSenteRealiza4">
+                      estou muito frustrado no momento
+                    </label>
+                  </div>
+                </div>
 
-            <p class="text-center highlight"><strong>Sabe o que realmente quer da vida?</strong></p>
-  
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal1" value="sim, sei para onde quero ir"/>
-                <label class="form-check-label" for="radioSabeReal1">
-                  sim, sei para onde quero ir
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal2" value="médio, talvez, as vezes me sinto no piloto automatico"/>
-                <label class="form-check-label" for="radioSabeReal2">
-                  médio, talvez, as vezes me sinto no piloto automatico
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal3" value="fraco, não penso muito em para onde ir, vou vivendo"/>
-                <label class="form-check-label" for="radioSabeReal3">
-                  fraco, não penso muito em para onde ir, vou vivendo
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal4" value="não, nada/pouco não sei muito bem o que quero da vida"/>
-                <label class="form-check-label" for="radioSabeReal4">
-                  não, nada/pouco não sei muito bem o que quero da vida
+                <p class="text-center highlight"><strong>Sabe o que realmente quer da vida?</strong></p>
+                <div class="radioContainer">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal1"
+                      value="sim, sei para onde quero ir" />
+                    <label class="form-check-label" for="radioSabeReal1">
+                      sim, sei para onde quero ir
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal2"
+                      value="médio, talvez, as vezes me sinto no piloto automatico" />
+                    <label class="form-check-label" for="radioSabeReal2">
+                      médio, talvez, as vezes me sinto no piloto automatico
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal3"
+                      value="fraco, não penso muito em para onde ir, vou vivendo" />
+                    <label class="form-check-label" for="radioSabeReal3">
+                      fraco, não penso muito em para onde ir, vou vivendo
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="radioSabeReal" id="radioSabeReal4"
+                      value="não, nada/pouco não sei muito bem o que quero da vida" />
+                    <label class="form-check-label" for="radioSabeReal4">
+                      não, nada/pouco não sei muito bem o que quero da vida
+                    </label>
+                  </div>
+                </div>
 
-                </label>
-              </div>
+                <div class="card-footer text-end divSend">
+                  <button type="submit" class="btn btn-primary btnSend">Enviar</button>
+                </div>
 
-            <div class="card-footer text-end divSend">
-                <button type="submit" class="btn btn-primary btnSend">Enviar</button>
-            </div>
+        </form>
 
-          </form>
-
-        </div>
       </div>
-  </body>
-  
-  </html>
+    </div>
+</body>
+
+</html>

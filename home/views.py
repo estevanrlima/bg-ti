@@ -565,6 +565,299 @@ def calc_suggestions_resili(pont_resili):
 
     return pont_resili_str, sug_resili
 
+def calc_burnout(request):
+    #pontuações
+    pont_burnout = 0    
+
+    # obtendo as variáveis do formulário preenchido
+    varSintoEsg = request.POST['radioSintoEsg']
+    varSintoExc = request.POST['radioSintoExc']
+    varLevCans = request.POST['radioLevCans']
+    varTrabTodoDia = request.POST['radioTrabTodoDia']
+    varTrabTodoDia = request.POST['radioTrabTodoDia']
+    varSoDesejo = request.POST['radioSoDesejo']
+    varSouMenosInt = request.POST['radioSouMenosInt']
+    varSouMenos = request.POST['radioSouMenos']
+    varSouDesc = request.POST['radioSouDesc']
+    varDuvido = request.POST['radioDuvido']
+    varSintoEntus = request.POST['radioSintoEntus']
+    varRealizo = request.POST['radioRealizo']
+    varPossoEfet = request.POST['radioPossoEfet']
+    varSintoEstouDando = request.POST['radioSintoEstouDando']
+    varNaMinhaOp = request.POST['radioNaMinhaOp']
+    varNoMeuTrab = request.POST['radioNoMeuTrab']
+    varSintoResp = request.POST['radioSintoResp']
+    varSintoQuePessoas = request.POST['radioSintoQuePessoas']
+    varPensoNaoImporta = request.POST['radioPensoNaoImporta']
+    varSintoNaoAcred = request.POST['radioSintoNaoAcred']
+
+    if(varSintoEsg == 'Nunca'):
+        pont_burnout = 0
+    elif(varSintoEsg == 'Anualmente'):
+        pont_burnout = 1
+    elif(varSintoEsg == 'Mensalmente'):
+        pont_burnout = 2
+    elif(varSintoEsg == 'Algumas vezes no mês'):
+        pont_burnout = 3
+    elif(varSintoEsg == 'Uma vez por semana'):
+        pont_burnout = 4
+    else:
+        pont_burnout = 5
+
+    if varSintoExc == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSintoExc == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSintoExc == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSintoExc == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSintoExc == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varLevCans == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varLevCans == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varLevCans == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varLevCans == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varLevCans == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varTrabTodoDia == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varTrabTodoDia == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varTrabTodoDia == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varTrabTodoDia == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varTrabTodoDia == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSoDesejo == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSoDesejo  == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSoDesejo  == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSoDesejo  == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSoDesejo  == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSouMenosInt == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSouMenosInt   == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSouMenosInt   == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSouMenosInt   == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSouMenosInt   == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSouMenos == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSouMenos    == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSouMenos    == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSouMenos    == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSouMenos    == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSouDesc == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSouDesc     == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSouDesc     == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSouDesc     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSouDesc     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varDuvido == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varDuvido     == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varDuvido     == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varDuvido     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varDuvido     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSintoEntus == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varSintoEntus     == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varSintoEntus     == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varSintoEntus     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varSintoEntus     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varRealizo == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varRealizo     == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varRealizo     == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varRealizo     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varRealizo     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varPossoEfet == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varPossoEfet     == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varPossoEfet     == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varPossoEfet     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varPossoEfet     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varSintoEstouDando == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varSintoEstouDando     == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varSintoEstouDando     == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varSintoEstouDando     == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varSintoEstouDando     == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varNaMinhaOp == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varNaMinhaOp      == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varNaMinhaOp      == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varNaMinhaOp      == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varNaMinhaOp      == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varNoMeuTrab == 'Nunca':
+        pont_burnout = pont_burnout + 5
+    elif varNoMeuTrab       == 'Anualmente':
+        pont_burnout = pont_burnout + 4
+    elif varNoMeuTrab       == 'Mensalmente':
+        pont_burnout = pont_burnout + 3
+    elif varNoMeuTrab       == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 2
+    elif varNoMeuTrab       == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 1
+    else:
+        pont_burnout = pont_burnout + 0
+
+    if varSintoResp  == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSintoResp        == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSintoResp        == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSintoResp        == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSintoResp        == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varSintoQuePessoas == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSintoQuePessoas         == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSintoQuePessoas         == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSintoQuePessoas         == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSintoQuePessoas         == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+    if varPensoNaoImporta == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varPensoNaoImporta          == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varPensoNaoImporta          == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varPensoNaoImporta          == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varPensoNaoImporta          == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+    
+    if varSintoNaoAcred == 'Nunca':
+        pont_burnout = pont_burnout + 0
+    elif varSintoNaoAcred           == 'Anualmente':
+        pont_burnout = pont_burnout + 1
+    elif varSintoNaoAcred           == 'Mensalmente':
+        pont_burnout = pont_burnout + 2
+    elif varSintoNaoAcred           == 'Algumas vezes no mês':
+        pont_burnout = pont_burnout + 3
+    elif varSintoNaoAcred           == 'Uma vez por semana':
+        pont_burnout = pont_burnout + 4
+    else:
+        pont_burnout = pont_burnout + 5
+
+
+    return pont_burnout
+
+def cal_suggestions_burnout(pont_burnout):
+    pont_burnout_str = ''
+    sug_burnout = ''
+
+    if pont_burnout <=20:
+        pont_burnout_str = "Nenhum indício da Síndrome de Burnout"
+    elif pont_burnout<=40:
+        pont_burnout_str = "Possibilidade de desenvolver Burnout"
+    elif pont_burnout <=60:
+        pont_burnout_str = "Fase inicial de Burnout"
+    elif pont_burnout <=80:
+        pont_burnout_str ="Burnout começa a se instalar"
+    else:
+        pont_burnout_str = "Fase considerável de Burnout"
+
+    return pont_burnout_str
+
 def index(request):
     
     image_url = 'https://raw.githubusercontent.com/estevanrlima/bgtreinamentos/main/logo%20BG%20treinamentos.png'
@@ -620,8 +913,27 @@ def index(request):
                 fail_silently=False,
                 html_message=html_content
             )
-        else:
-            pass
+        elif(request.POST['formName'] == 'burnoutForm'):
+            pont_burnout = calc_burnout(request)
+            pont_burnout_str= cal_suggestions_burnout(pont_burnout)
+
+            subject = 'Devolutiva - BG Saúde - Burnout'
+            html_content = render_to_string('home/burnout.html', {
+                'pont_burnout_str': pont_burnout_str,
+                'image_url': image_url,
+            })
+
+            # Create the plain text version of the email (optional)
+            plain_message = strip_tags(html_content)
+
+            send_mail(
+                subject,
+                plain_message,
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[user_email],
+                fail_silently=False,
+                html_message=html_content
+            )
         
 
         
