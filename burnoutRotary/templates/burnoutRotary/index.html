@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% load static %}
+  <link rel="stylesheet" href='{% static "css/style.css" %}?version=1'>
+  <script src="{% static 'scripts/burnout.js' %}"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Burnout</title>
+</head>
+
+<body>
+  <div class="mx-0 mx-sm-auto">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center">
+          <i class="far fa-file-alt fa-4x mb-3 text-primary"></i>
+          <p class="pTitle">
+            <strong>BURNOUT</strong>
+          </p>
+          <p>
+            Responda a alternativa que está mais coerente com seu estado emocional, nas últimas semanas:
+          </p>
+        </div>
+
+        <form class="px-4" id="resiliForm" action="{% url 'burnoutRotarySuccess' %}?allow_access=true" method="post" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <input type="hidden" name="formName" value="burnoutForm">
+
+          <div class="form-group">            
+            <input type="hidden" class="form-control" name="userEmail" id="exampleInputEmail1"
+              aria-describedby="emailHelp" placeholder="Digite o seu email" value="bgburnoutrotary@gmail.com">            
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto-me esgotado(a) emocionalmente em relação ao meu
+              trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg1" value="Nunca" />
+              <label class="form-check-label" for="radioSintoEsg1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoEsg2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoEsg3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoEsg4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoEsg5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEsg" id="radioSintoEsg6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoEsg6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto-me excessivamente exausto ao final da minha jornada de
+              trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc1" value="Nunca" />
+              <label class="form-check-label" for="radioSintoExc1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoExc2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoExc3">
+                Mensalmente
+              </label>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoExc4">
+                Algumas vezes no mês
+              </label>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoExc5">
+                Uma vez por semana
+              </label>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoExc" id="radioSintoExc6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoExc6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Levanto-me cansado(a) e sem disposição para realizar meu
+              trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans1" value="Nunca" />
+              <label class="form-check-label" for="radioLevCans1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans2" value="Anualmente" />
+              <label class="form-check-label" for="radioLevCans2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans3" value="Mensalmente" />
+              <label class="form-check-label" for="radioLevCans3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioLevCans4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioLevCans5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioLevCans" id="radioLevCans6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioLevCans6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Trabalhar o dia todo é realmente motivo de tensão para mim</strong>
+          </p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioTrabTodoDia1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioTrabTodoDia2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioTrabTodoDia3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioTrabTodoDia4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioTrabTodoDia5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTrabTodoDia" id="radioTrabTodoDia6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioTrabTodoDia6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto-me esgotado(a) por causa do meu trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioSintEsgTrab1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintEsgTrab2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintEsgTrab3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintEsgTrab4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintEsgTrab5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintEsgTrab" id="radioSintEsgTrab6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintEsgTrab6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Só desejo fazer meu trabalho e não ser incomodado</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSoDesejo" id="radioSoDesejo1" value="Nunca" />
+              <label class="form-check-label" for="radioSoDesejo1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSoDesejo" id="radioSoDesejo2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSoDesejo2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSoDesejo" id="radioSoDesejo3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSoDesejo3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSoDesejo" id="radioSoDesejo4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSoDesejo4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioTemVidaSocial" id="radioSoDesejo5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSoDesejo5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSoDesejo" id="radioSoDesejo6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSoDesejo6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sou menos interessado no meu trabalho desde que assumi essa
+              função</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt1" value="Nunca" />
+              <label class="form-check-label" for="radioSouMenosInt1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSouMenosInt2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSouMenosInt3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSouMenosInt4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSouMenosInt5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenosInt" id="radioSouMenosInt6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSouMenosInt6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sou menos entusiasmado (a) com meu trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos1" value="Nunca" />
+              <label class="form-check-label" for="radioSouMenos1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSouMenos2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSouMenos3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSouMenos4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSouMenos5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouMenos" id="radioSouMenos6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSouMenos6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sou descrente sobre a contribuição do meu trabalho para algo
+            </strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc1" value="Nunca" />
+              <label class="form-check-label" for="radioSouDesc1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc2" value="Anualmente" />
+              <label class="form-check-label" for="radioSouDesc2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc3" value="Mensalmente" />
+              <label class="form-check-label" for="radioSouDesc3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSouDesc4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSouDesc5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSouDesc" id="radioSouDesc6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSouDesc6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Duvido da importância do meu trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido1" value="Nunca" />
+              <label class="form-check-label" for="radioDuvido1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido2" value="Anualmente" />
+              <label class="form-check-label" for="radioDuvido2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido3" value="Mensalmente" />
+              <label class="form-check-label" for="radioDuvido3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioDuvido4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioDuvido5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioDuvido" id="radioDuvido6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioDuvido6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto-me entusiasmado quando realizo algo no meu trabalho</strong>
+          </p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus1" value="Nunca" />
+              <label class="form-check-label" for="radioSintoEntus1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoEntus2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoEntus3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoEntus4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoEntus5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEntus" id="radioSintoEntus6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoEntus6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Realizo muitas coisas valiosas no meu trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo1" value="Nunca" />
+              <label class="form-check-label" for="radioRealizo1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo2" value="Anualmente" />
+              <label class="form-check-label" for="radioRealizo2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo3" value="Mensalmente" />
+              <label class="form-check-label" for="radioRealizo3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioRealizo4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioRealizo5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioRealizo" id="radioRealizo6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioRealizo6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Posso efetivamente solucionar os problemas que surgem no meu trabalho
+            </strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet1" value="Nunca" />
+              <label class="form-check-label" for="radioPossoEfet1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioPossoEfet2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioPossoEfet3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioPossoEfet4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioPossoEfet5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPossoEfet" id="radioPossoEfet6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioPossoEfet6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto que estou dando uma contribuição efetiva para essa
+              organização</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioSintoEstouDando1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoEstouDando2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoEstouDando3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoEstouDando4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoEstouDando5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoEstouDando" id="radioSintoEstouDando6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoEstouDando6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Na minha opinião, sou bom no que faço </strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp1" value="Nunca" />
+              <label class="form-check-label" for="radioNaMinhaOp1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioNaMinhaOp2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioNaMinhaOp3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioNaMinhaOp4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioNaMinhaOp5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNaMinhaOp" id="radioNaMinhaOp6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioNaMinhaOp6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>No meu trabalho me sinto confiante de que sou eficiente e capaz de
+              fazer com que as coisas aconteçam</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab1" value="Nunca" />
+              <label class="form-check-label" for="radioNoMeuTrab1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioNoMeuTrab2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioNoMeuTrab3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioNoMeuTrab4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioNoMeuTrab5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioNoMeuTrab" id="radioNoMeuTrab6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioNoMeuTrab6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto-me responsável pelos problemas das pessoas que atendo</strong>
+          </p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp1" value="Nunca" />
+              <label class="form-check-label" for="radioSintoResp1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoResp2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoResp3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoResp4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoResp5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoResp" id="radioSintoResp6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoResp6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto que as pessoas me culpam pelos seus problemas</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioSintoQuePessoas1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoQuePessoas2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoQuePessoas3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoQuePessoas4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoQuePessoas5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoQuePessoas" id="radioSintoQuePessoas6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoQuePessoas6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Penso que não importa o que eu faça, nada vai mudar no meu
+              trabalho</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioPensoNaoImporta1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioPensoNaoImporta2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioPensoNaoImporta3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioPensoNaoImporta4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioPensoNaoImporta5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioPensoNaoImporta" id="radioPensoNaoImporta6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioPensoNaoImporta6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <p class="text-center highlight"><strong>Sinto que não acredito mais na profissão que exerço</strong></p>
+          <div class="radioContainer">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred1"
+                value="Nunca" />
+              <label class="form-check-label" for="radioSintoNaoAcred1">
+                Nunca
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred2"
+                value="Anualmente" />
+              <label class="form-check-label" for="radioSintoNaoAcred2">
+                Anualmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred3"
+                value="Mensalmente" />
+              <label class="form-check-label" for="radioSintoNaoAcred3">
+                Mensalmente
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred4"
+                value="Algumas vezes no mês" />
+              <label class="form-check-label" for="radioSintoNaoAcred4">
+                Algumas vezes no mês
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred5"
+                value="Uma vez por semana" />
+              <label class="form-check-label" for="radioSintoNaoAcred5">
+                Uma vez por semana
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="radioSintoNaoAcred" id="radioSintoNaoAcred6"
+                value="Quase todo dia" />
+              <label class="form-check-label" for="radioSintoNaoAcred6">
+                Quase todo dia
+              </label>
+            </div>
+          </div>
+
+          <div class="card-footer text-end divSend">
+            <button type="submit" class="btn btn-primary btnSend">Enviar</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+</body>
+
+</html>

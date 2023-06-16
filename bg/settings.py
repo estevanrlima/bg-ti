@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'resiliteste',
     'burnout',
     'authentication',
+    'burnoutRotary',
+    'success',
 ]
 
 MIDDLEWARE = [
